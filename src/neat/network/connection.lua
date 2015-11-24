@@ -11,7 +11,7 @@ function Connection.new(input, output, weight)
 	property(Connection, "__input", "input", "setInput", o, input)
 	property(Connection, "__output", "output", "setOutput", o, output)
 	property(Connection, "__weight", "weight", "setWeight", o, weight)
-	property(Connection, "__innovation", "innovation", "setInnovation", Neat:_newInnovation())
+	property(Connection, "__innovation", "innovation", "setInnovation", o, NeatCore:newInnovation())
 
 	setmetatable(o, { __index = Connection })
 
