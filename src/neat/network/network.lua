@@ -1,4 +1,6 @@
 dofile("../core/classextensions.lua")
+dofile("connection.lua")
+dofile("neuron.lua")
 
 if not NetworkDefined then
 
@@ -8,17 +10,17 @@ function Network.new(empty)
 	local o = {}
 
 	property(Network, "__neurons", "neurons", "setNeurons", o, {})
-	property(Network, "__links", "links", "setLinks", o, {})
+	property(Network, "__connections", "connections", "setconnections", o, {})
 
 	if not empty then
 		local neurons = {}
-		local links = {}
+		local connections = {}
 
 		-- add one extra for bias
 		for i = 1, Neat.IO.InputsCount + 1 do
 			table.insert(neurons, Neuron.new(true))
-			-- create simples links, i = input neuron index, Neat.IO.InputsCount + 2 = output neuron index  
-			-- table.insert(links, Connection.new(i, Neat.IO.InputsCount + 2))
+			-- create simples connections, i = input neuron index, Neat.IO.InputsCount + 2 = output neuron index  
+			-- table.insert(connections, Connection.new(i, Neat.IO.InputsCount + 2))
 		end
 
 		for i = 1, Neat.IO.OutputsCount do
