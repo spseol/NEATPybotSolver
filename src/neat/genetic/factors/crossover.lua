@@ -22,9 +22,7 @@ function Crossover.crossover(chromosome, otherChromosome)
     local disjointAndExcessGenes = table.join(ChromosomeAnalyzer.disjointAndExcessGenes(chromosome, otherChromosome))
 
     for _, gene in pairs(disjointAndExcessGenes) do
-        if moreFitParent:hasGene(gene) then
-            childGenes[gene:innovation()] = gene:copy()
-        end
+        childGenes[gene:innovation()] = gene:copy()
     end
 
     childChromosome:setGenes(childGenes)
