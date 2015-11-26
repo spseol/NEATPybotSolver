@@ -4,28 +4,44 @@ require "neat.network.neuron"
 Gene = {}
 
 GeneMeta = {
-	__index = Gene,
-	__tostring = function(self)
+    __index = Gene,
+    __tostring = function(self)
 
-		local geneString = {
-			string.format("| Gene %i - %0.2f |", self.__innovation, self.__weight),
-			string.format("| %i -> %i ", self.__input, self.__output)
-		}
-		geneString[2] = geneString[2] .. string.rep(" ", #geneString[1] - #geneString[2] - 1) .. "|"
+        local geneString = {
+            string.format("| Gene %i - %0.2f |", self.__innovation, self.__weight),
+            string.format("| %i -> %i ", self.__input, self.__output)
+        }
+        geneString[2] = geneString[2] .. string.rep(" ", #geneString[1] - #geneString[2] - 1) .. "|"
 
-		return geneString[1] .. "\n" .. geneString[2] .. "\n"
-	end
+        return geneString[1] .. "\n" .. geneString[2] .. "\n"
+    end
 }
 
 function Gene.new(networkConnection)
-	local o = {}
+    local o = {}
 
-	property(Gene, "__input", "input", nil, o, networkConnection:input())
-	property(Gene, "__output", "output", nil, o, networkConnection:output())
-	property(Gene, "__innovation", "innovation", nil, o, networkConnection:innovation())
-	property(Gene, "__weight", "weight", nil, o, networkConnection:weight())
+    property(Gene, "__input", "input", nil, o, networkConnection:input())
+    property(Gene, "__output", "output", nil, o, networkConnection:output())
+    property(Gene, "__innovation", "innovation", nil, o, networkConnection:innovation())
+    property(Gene, "__weight", "weight", "setWeight", o, networkConnection:weight())
 
-	setmetatable(o, GeneMeta)
+    setmetatable(o, GeneMeta)
 
-	return o
+    return o
 end
+
+function Gene:copy()
+    local o = {}
+    
+    for k, v in pairs(self) do
+        o[k] = v
+    end
+    
+    setmetatable(o, GeneMeta)
+    
+    return o
+end
+
+-- function Gene:setWeight(v)
+--     self.__weight = v
+-- end

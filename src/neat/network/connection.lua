@@ -1,5 +1,5 @@
 require "core.classextensions"
-require "core.neatcore"
+require "neat.neatcore"
 
 Connection = {}
 
