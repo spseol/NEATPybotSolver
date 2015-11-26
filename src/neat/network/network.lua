@@ -33,9 +33,5 @@ function Network.new(empty)
 	return o
 end
 
-function Network:toGenome()
-
-end
-
 NetworkDefined = true
 end
