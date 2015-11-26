@@ -1,90 +1,91 @@
-function registerLuaFiles(base, subdirs) if registered == nil then registered = {} end if registered[base] then return end local modifiedSubdirs = {} local path = arg[0] local modifiedPath = string.gsub(path, "/", "\\")	local base = string.gsub(base, "/", "\\") for _, sdirPath in pairs(subdirs) do modifiedSubdirs[#modifiedSubdirs + 1] = string.gsub(sdirPath, "/", "\\") end _, last = string.find(modifiedPath, base) base = string.sub(modifiedPath, 1, last + 1)	for _, dirPath in pairs(modifiedSubdirs) do	package.path = package.path .. ";".. base .. dirPath .. "\\?.lua" end registered[base] = true end
+function registerLuaFiles(base, subdirs) if registered == nil then registered = {} end if registered[base] then return end local modifiedSubdirs = {} local path = arg[0] local modifiedPath = string.gsub(path, "/", "\\")    local base = string.gsub(base, "/", "\\") for _, sdirPath in pairs(subdirs) do modifiedSubdirs[#modifiedSubdirs + 1] = string.gsub(sdirPath, "/", "\\") end _, last = string.find(modifiedPath, base) base = string.sub(modifiedPath, 1, last + 1)    for _, dirPath in pairs(modifiedSubdirs) do    package.path = package.path .. ";".. base .. dirPath .. "\\?.lua" end registered[base] = true end
 
 registerLuaFiles("NEATPybotSolver", { "src" })
 -- registerLuaFiles("neat", { "genetic", "genetic/factors", "network" })
 
 require "core.core"
-require "core.neatcore"
+require "neat.neatcore"
 require "core.classextensions"
 require "neat.network.network"
 require "neat.genetic.factors.crossover"
+require  "neat.genetic.factors.mutator"
 require "neat.genetic.gene"
 require "neat.genetic.chromosomeanalyzer"
 
 Chromosome = {}
 
 ChromosomeMeta = {
-	__index = Chromosome,
-	__tostring = function(self)
-		local firstLine = ""
-		local secondLine = ""
+    __index = Chromosome,
+    __tostring = function(self)
+        local firstLine = ""
+        local secondLine = ""
 
-		for _, gene in pairs(self.__genes) do
-			local strGene = tostring(gene)
-			firstLine = firstLine .. string.split(strGene, "\n")[1]
-			secondLine = secondLine .. string.split(strGene, "\n")[2]
-		end
+        for _, gene in pairs(self.__genes) do
+            local strGene = tostring(gene)
+            firstLine = firstLine .. string.split(strGene, "\n")[1]
+            secondLine = secondLine .. string.split(strGene, "\n")[2]
+        end
 
-		return string.rep("-", #firstLine) .. "\n" .. firstLine .. "\n" .. secondLine .. "\n" .. string.rep("-", #firstLine)
-	end
+        return string.rep("-", #firstLine) .. "\n" .. firstLine .. "\n" .. secondLine .. "\n" .. string.rep("-", #firstLine)
+    end
 }
 
 function Chromosome.new(network)
-	local o = {}
+    local o = {}
 
-	-- convert network connections to genes
-	local rgenes = {}
-	if network then
-		for _, v in pairs(network:connections()) do
-			rgenes[v:innovation()] = Gene.new(v)
-		end
-	end
+    -- convert network connections to genes
+    local rgenes = {}
+    if network then
+        for _, v in pairs(network:connections()) do
+            rgenes[v:innovation()] = Gene.new(v)
+        end
+    end
 
-	property(Chromosome, "__genes", "genes", nil, o, rgenes)
-	property(Chromosome, "__fitness", "fitness", "setFitness", o, 0)
+    property(Chromosome, "__genes", "genes", nil, o, rgenes)
+    property(Chromosome, "__fitness", "fitness", "setFitness", o, 0)
 
-	setmetatable(o, ChromosomeMeta)
+    setmetatable(o, ChromosomeMeta)
 
-	return o
+    return o
 end
 
 function Chromosome:setGenes(genes)
-	for _, gene in pairs(genes) do
-		self.__genes[gene:innovation()] = gene
-	end
+    for _, gene in pairs(genes) do
+        self.__genes[gene:innovation()] = gene
+    end
 end
 
 function Chromosome:hasGene(gene)
-	if self.__genes[gene:innovation()] then
-		return true
-	else
-		return false
-	end
+    if self.__genes[gene:innovation()] then
+        return true
+    else
+        return false
+    end
 end
 
 function Chromosome:toNetwork()
-	local network = Network.new(true)
-	local connections = {}
-	-- TODO add neurons?
-	for _, gene in pairs(self.__genes) do
-		local connection = Connection.new(gene:input(), gene:output(), gene:weight())
-		table.insert(connections, connection)
-	end
+    local network = Network.new(true)
+    local connections = {}
+    -- TODO add neurons?
+    for _, gene in pairs(self.__genes) do
+        local connection = Connection.new(gene:input(), gene:output(), gene:weight())
+        table.insert(connections, connection)
+    end
 
-	network:setConnections(connections)
+    network:setConnections(connections)
 
-	return network
+    return network
 end
 
 -- insert innovation number of genes into table
 function Chromosome:innovations()
-	local innovations = {}
+    local innovations = {}
 
-	for k, gene in pairs(self.__genes) do 
-		table.insert(innovations, gene:innovation())
-	end
+    for k, gene in pairs(self.__genes) do 
+        table.insert(innovations, gene:innovation())
+    end
 
-	return innovations
+    return innovations
 end
 
 n = Network.new(true)
@@ -120,10 +121,12 @@ b:setFitness(55)
 
 c = Crossover.crossover(a, b)
 
-print(tostring(a))
-print(tostring(b))
-print("-----------------------------------------")
-print(tostring(c))
+gg = Gene.new(g12)
+
+-- print(tostring(a))
+-- print(tostring(b))
+-- print("-----------------------------------------")
+-- print(tostring(c))
 --print(b:isSameSpecies(c))
 --table.foreach(string.split(tostring(a), "\n"), print)
 
