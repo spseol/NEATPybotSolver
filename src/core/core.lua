@@ -8,6 +8,81 @@ table.keysCount = function(t)
 	return count
 end
 
+table.last = function(t)
+	local last
+
+	for _, v in pairs(t) do
+		last = v
+	end
+
+	return last
+end
+
+table.join = function(t)
+	local result = ""
+
+	for _, v in pairs(t) do
+		result = result .. v
+	end
+
+	return result
+end
+
+table.copy = function(t)
+	local copiedTable = {}
+
+	for k, v in pairs(t) do
+		copiedTable[k] = v
+	end
+
+	return copiedTable
+end
+
+table.merge = function(t1, t2)
+	local result = table.copy(t1)
+
+	for k, v in pairs(t2) do
+		result[k] = v
+	end
+
+	return result
+end
+
+table.join = function(t1, t2)
+	local result = table.copy(t1)
+
+	for _, v in pairs(t2) do
+		table.insert(result, v)
+	end
+
+	return result
+end
+
+string.split = function(str, separator)
+	local list = {}
+	local startCharIndex = 1
+	
+	for i = 1, #str do
+		local char = string.sub(str, i, i)
+		if char == separator then
+			table.insert(list, string.sub(str, startCharIndex, i - 1))
+			startCharIndex = i + 1	-- skip separator
+		end
+	end
+
+	return list
+end
+
+math.round = function(v)
+	local rest = v - math.floor(v)
+
+	if rest < 0.5 then
+		return math.floor(v)
+	else
+		return math.ceil(v)
+	end
+end
+
 Set = {}
 
 function Set.new(list)
@@ -61,6 +136,9 @@ end
 CoreDefined = true
 end
 
+
+--local b = {print, {}, "u", print}
+--print(table.keysCount(b))
 --[[local a = Set.new {1, 2, 5, 6}
 print(table.keysCount(a))
 table.foreach(a, print)

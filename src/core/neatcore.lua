@@ -11,7 +11,7 @@ NeatCore = {
 		Outputs = {}
 	},
 
-	-- settings to determinate genomes compability to divide them into species
+	-- settings to determinate chromosomes compability to divide them into species
 	SpeciesCoefficients = {
 		excess = 1.0,
 		disjoint = 1.0,
@@ -21,7 +21,7 @@ NeatCore = {
 
 	-- mutations chances
 	MutationsChances = {
-		genome = 0.8,
+		chromosome = 0.8,
 		weight = 0.9,
 		randomWeight = 0.1
 	},
