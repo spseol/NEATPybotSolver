@@ -1,7 +1,5 @@
-dofile("../../core/classextensions.lua")
-dofile("../network/connection.lua")
-
-if not GeneDefined then
+require "core.classextensions"
+require "neat.network.neuron"
 
 Gene = {}
 
@@ -30,7 +28,4 @@ function Gene.new(networkConnection)
 	setmetatable(o, GeneMeta)
 
 	return o
-end
-
-GeneDefined = true
 end

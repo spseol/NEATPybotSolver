@@ -1,5 +1,3 @@
-if not ClassExtensionsDefined then
-
 function property(class, propertyName, getterName, setterName, object, propertyValue, defaultValue)
 	if type(propertyName) ~= "string" then
 		error("Property name should be <string> got " .. type(propertyName))
@@ -24,7 +22,4 @@ function property(class, propertyName, getterName, setterName, object, propertyV
 			obj[propertyName] = v
 		end
 	end
-end
-
-ClassExtensionsDefined = true
 end
