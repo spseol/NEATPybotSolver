@@ -10,7 +10,7 @@ function Network.new(empty)
 	local o = {}
 
 	property(Network, "__neurons", "neurons", "setNeurons", o, {})
-	property(Network, "__connections", "connections", "setconnections", o, {})
+	property(Network, "__connections", "connections", "setConnections", o, {})
 
 	if not empty then
 		local neurons = {}
