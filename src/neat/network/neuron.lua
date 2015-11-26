@@ -1,4 +1,4 @@
-dofile("../core/classextensions.lua")
+dofile("../../core/classextensions.lua")
 
 if not NeuronDefined then
 

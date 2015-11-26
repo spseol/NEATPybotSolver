@@ -1,6 +1,6 @@
-dofile("../core/classextensions.lua")
-dofile("connection.lua")
-dofile("neuron.lua")
+dofile("../../core/classextensions.lua")
+dofile("../network/connection.lua")
+dofile("../network/neuron.lua")
 
 if not NetworkDefined then
 

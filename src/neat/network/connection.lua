@@ -1,4 +1,5 @@
-dofile("../core/classextensions.lua")
+dofile("../../core/classextensions.lua")
+dofile("../../core/neatcore.lua")
 
 if not ConnectionDefined then
 
