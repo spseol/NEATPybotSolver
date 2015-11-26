@@ -1,5 +1,3 @@
-if not NeatCoreDefined then
-
 NeatCore = {
 	__innovation = 0,
 	population = 1000,
@@ -18,7 +16,7 @@ NeatCore = {
 		weight = 0.4,
 		deltaThreshold = 3.0
 	},
-
+	
 	-- mutations chances
 	MutationsChances = {
 		chromosome = 0.8,
@@ -43,7 +41,4 @@ end
 
 -- returns true if innovation already exists in generation
 function NeatCore:checkInnovationinGeneration(innovationGene)
-end
-
-NeatCoreDefined = true
 end

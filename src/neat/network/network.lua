@@ -1,8 +1,6 @@
-dofile("../../core/classextensions.lua")
-dofile("../network/connection.lua")
-dofile("../network/neuron.lua")
-
-if not NetworkDefined then
+require "core.classextensions"
+require "neat.network.connection"
+require "neat.network.neuron"
 
 Network = {}
 
@@ -31,7 +29,4 @@ function Network.new(empty)
 	setmetatable(o, { __index = Network })
 
 	return o
-end
-
-NetworkDefined = true
 end

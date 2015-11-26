@@ -1,5 +1,3 @@
-if not CoreDefined then
-
 table.keysCount = function(t)
 	local count = 0
 
@@ -132,10 +130,6 @@ function Set:toList()
 
 	return list
 end
-
-CoreDefined = true
-end
-
 
 --local b = {print, {}, "u", print}
 --print(table.keysCount(b))

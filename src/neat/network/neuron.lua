@@ -1,6 +1,4 @@
-dofile("../../core/classextensions.lua")
-
-if not NeuronDefined then
+require "core.classextensions"
 
 Neuron = {
 	index = 0
@@ -21,7 +19,4 @@ function Neuron.new(isInput)
 	setmetatable(o, { __index = Neuron })
 
 	return o
-end
-
-NeuronDefined = true
 end

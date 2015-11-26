@@ -1,12 +1,15 @@
-dofile("../../core/classextensions.lua")
-dofile("factors/crossover.lua")
-dofile("../network/network.lua")
-dofile("../../core/core.lua")
-dofile("../../core/neatcore.lua")
-dofile("gene.lua")
-dofile("chromosomeanalyzer.lua")
+function registerLuaFiles(base, subdirs) if registered == nil then registered = {} end if registered[base] then return end local modifiedSubdirs = {} local path = arg[0] local modifiedPath = string.gsub(path, "/", "\\")	local base = string.gsub(base, "/", "\\") for _, sdirPath in pairs(subdirs) do modifiedSubdirs[#modifiedSubdirs + 1] = string.gsub(sdirPath, "/", "\\") end _, last = string.find(modifiedPath, base) base = string.sub(modifiedPath, 1, last + 1)	for _, dirPath in pairs(modifiedSubdirs) do	package.path = package.path .. ";".. base .. dirPath .. "\\?.lua" end registered[base] = true end
 
-if not ChromosomeDefined then
+registerLuaFiles("NEATPybotSolver", { "src" })
+-- registerLuaFiles("neat", { "genetic", "genetic/factors", "network" })
+
+require "core.core"
+require "core.neatcore"
+require "core.classextensions"
+require "neat.network.network"
+require "neat.genetic.factors.crossover"
+require "neat.genetic.gene"
+require "neat.genetic.chromosomeanalyzer"
 
 Chromosome = {}
 
@@ -59,7 +62,6 @@ function Chromosome:hasGene(gene)
 	end
 end
 
-
 function Chromosome:toNetwork()
 	local network = Network.new(true)
 	local connections = {}
@@ -83,9 +85,6 @@ function Chromosome:innovations()
 	end
 
 	return innovations
-end
-
-ChromosomeDefined = true
 end
 
 n = Network.new(true)

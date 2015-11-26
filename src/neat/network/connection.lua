@@ -1,7 +1,5 @@
-dofile("../../core/classextensions.lua")
-dofile("../../core/neatcore.lua")
-
-if not ConnectionDefined then
+require "core.classextensions"
+require "core.neatcore"
 
 Connection = {}
 
@@ -17,7 +15,4 @@ function Connection.new(input, output, weight)
 	setmetatable(o, { __index = Connection })
 
 	return o
-end
-
-ConnectionDefined = true
 end
