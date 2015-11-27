@@ -13,8 +13,9 @@ function Crossover.crossover(chromosome, otherChromosome)
 
     -- randomly inherit parent common genes
     for key, _ in pairs(commonGenes[1]) do
-        childGenes[usedGene:innovation()] = usedGene:copy()
         local usedGene = commonGenes[math.seededRandom(1, 2)][key]
+        table.insert(childGenes, usedGene:copy())
+        -- childGenes[usedGene:innovation()] = usedGene:copy()
     end
 
     -- inherit excess and disjoint genes from more fit parent
@@ -22,10 +23,12 @@ function Crossover.crossover(chromosome, otherChromosome)
     local disjointAndExcessGenes = table.join(ChromosomeAnalyzer.disjointAndExcessGenes(chromosome, otherChromosome))
 
     for _, gene in pairs(disjointAndExcessGenes) do
-        childGenes[gene:innovation()] = gene:copy()
+        table.insert(childGenes, gene:copy())
+        -- childGenes[gene:innovation()] = gene:copy()
     end
 
     childChromosome:setGenes(childGenes)
+    Mutator.mutateDisabledInheritedGenes(chromosome, otherChromosome, childChromosome)
 
     return childChromosome
 end
