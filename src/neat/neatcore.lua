@@ -14,23 +14,26 @@ NeatCore = {
         excess = 1.0,
         disjoint = 1.0,
         weight = 0.4,
-        deltaThreshold = 3.0
+        deltaThreshold = 1.5--3.0
     },
     
-    -- mutations chances
+    -- mutations chances and
+    -- chance, that property will inherit parent property, crossover chances etc...
     MutationsChances = {
         chromosome = 0.8,
-        weight = 0.9,
-        randomWeight = 0.1
-    },
-
-    -- chance, that property will inherit parent property, crossover chances etc...
-    TansformationChances = {
+        perturb = 0.9,
+        randomWeight = 0.1,
         disableIfParentDisable = 0.75,
         offspringCrossover = 0.75,
+        newNode = 0.3, -- 0.03
+        newLink = 0.6, -- 0.05
+        disableGene = 0.4,
+        enableGene = 0.2
+    },
+    
+    Mutation = {
         interspeciesMatingRate = 0.001,
-        newNode = 0.03,
-        newLink = 0.05
+        stepSize = 0.1
     }
 }
 
