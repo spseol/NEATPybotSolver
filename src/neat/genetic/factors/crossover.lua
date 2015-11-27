@@ -13,8 +13,8 @@ function Crossover.crossover(chromosome, otherChromosome)
 
     -- randomly inherit parent common genes
     for key, _ in pairs(commonGenes[1]) do
-        local usedGene = commonGenes[math.random(1, 2)][key]
         childGenes[usedGene:innovation()] = usedGene:copy()
+        local usedGene = commonGenes[math.seededRandom(1, 2)][key]
     end
 
     -- inherit excess and disjoint genes from more fit parent
