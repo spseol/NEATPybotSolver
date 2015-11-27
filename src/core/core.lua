@@ -81,6 +81,17 @@ math.round = function(v)
     end
 end
 
+math.randomseed(os.time())
+math.random()
+function math.seededRandom(start, end_)
+    -- math.randomseed(math.random())
+    if start ~= nil and end_ ~= nil then
+        return math.random(start, end_)
+    else
+      return math.random()
+    end
+end
+
 Set = {}
 
 function Set.new(list)
