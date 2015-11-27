@@ -6,12 +6,18 @@ Gene = {}
 GeneMeta = {
     __index = Gene,
     __tostring = function(self)
-
+        local border = "|"
+        local margin = " "
+        local fill = "#"
+        if not self.__enabled and self.__innovation == 1 then print(666) end
+        if not self.__enabled then margin = fill end
+        
         local geneString = {
-            string.format("| Gene %i - %0.2f |", self.__innovation, self.__weight),
-            string.format("| %i -> %i ", self.__input, self.__output)
+            string.format(border .. margin .. "Gene %i - %0.2f" .. margin .. border, self.__innovation, self.__weight),
+            string.format(border .. margin .. "%i -> %i" .. margin, self.__input, self.__output)
         }
-        geneString[2] = geneString[2] .. string.rep(" ", #geneString[1] - #geneString[2] - 1) .. "|"
+        
+        geneString[2] = geneString[2] .. string.rep(margin, #geneString[1] - #geneString[2] - 1) .. border
 
         return geneString[1] .. "\n" .. geneString[2] .. "\n"
     end
@@ -20,13 +26,14 @@ GeneMeta = {
 function Gene.new(networkConnection)
     local o = {}
 
+    property(Gene, "__enabled", "enabled", "setEnabled", o, networkConnection:enabled())
     property(Gene, "__input", "input", nil, o, networkConnection:input())
     property(Gene, "__output", "output", nil, o, networkConnection:output())
     property(Gene, "__innovation", "innovation", nil, o, networkConnection:innovation())
     property(Gene, "__weight", "weight", "setWeight", o, networkConnection:weight())
 
     setmetatable(o, GeneMeta)
-
+    
     return o
 end
 
