@@ -54,7 +54,31 @@ function Mutator.mutateChromosoneGenesEnable(chromosome)
     end
 end
 
-function Mutator.newNode()
+function Mutator.newNode(chromosome)
+    local genes = chromosome:genes()
+    local neuronsIndexes = {}
+    local geneIndex = chromosome:innovations()[math.seededRandom(1, #chromosome:innovations())]
+    
+    for _, gene in pairs(genes) do
+        neuronsIndexes[gene:input()] = true
+        neuronsIndexes[gene:output()] = true
+    end 
+    
+    -- Set to list and then sort list
+    neuronsIndexes = Set.copySet(neuronsIndexes)
+    neuronsIndexes = neuronsIndexes:toList()
+    table.sort(neuronsIndexes)
+    
+    for index, gene in pairs(genes) do
+        if index == geneIndex then
+            local firstNewGene = Gene.new(Connection.new(gene:input(), neuronsIndexes[#neuronsIndexes] + 1, 1))
+            local secondNewGene = Gene.new(Connection.new(neuronsIndexes[#neuronsIndexes] + 1, gene:output(), gene:weight()))
+             
+            genes[firstNewGene:innovation()] = firstNewGene
+            genes[secondNewGene:innovation()] = secondNewGene
+            gene:setEnabled(false)
+        end
+    end
 end
 
 function Mutator.newLink()
