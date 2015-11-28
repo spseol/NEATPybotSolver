@@ -1,7 +1,7 @@
 require "core.classextensions"
 
 Neuron = {
-    index = 0
+    _ID = 0
 }
 
 NeuronMeta = {}
@@ -14,14 +14,14 @@ end
 function Neuron.new(isInputOrBias)
     local o = {}
 
-    if not isInput then
+    if not isInputOrBias then
         property(Neuron, "__inputs", "inputs", "setInputs", o, {})
     end
 
-    property(Neuron, "__isInput", "isInput", nil, o, isInput)
-    property(Neuron, "__index", "index", nil, o, Neuron.index + 1)
+    property(Neuron, "__isInputOrBias", "isInputOrBias", nil, o, isInputOrBias)
+    property(Neuron, "__ID", "ID", nil, o, Neuron._ID + 1)
     property(Neuron, "__outputs", "outputs", "setOutputs")
-    Neuron.index = Neuron.index + 1
+    Neuron._ID = Neuron._ID + 1
 
     setmetatable(o, NeuronMeta)
 
