@@ -106,6 +106,18 @@ function Set.new(list)
     return o
 end
 
+function Set.copySet(copiedSet)
+    local o = {}
+
+    for v, _ in pairs(copiedSet) do
+        o[v] = true
+    end
+    
+    setmetatable(o, { __index = Set })
+    
+    return o
+end
+
 function Set:intersect(other)
     local intersect = {}
 
