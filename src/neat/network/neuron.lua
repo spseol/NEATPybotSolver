@@ -4,7 +4,14 @@ Neuron = {
     index = 0
 }
 
-function Neuron.new(isInput)
+NeuronMeta = {}
+
+NeuronMeta.__index = Neuron
+function NeuronMeta.__tostring(self)
+    return string.format("Neuron(ID: %i)", self.__ID)
+end
+
+function Neuron.new(isInputOrBias)
     local o = {}
 
     if not isInput then
@@ -16,7 +23,7 @@ function Neuron.new(isInput)
     property(Neuron, "__outputs", "outputs", "setOutputs")
     Neuron.index = Neuron.index + 1
 
-    setmetatable(o, { __index = Neuron })
+    setmetatable(o, NeuronMeta)
 
     return o
 end
