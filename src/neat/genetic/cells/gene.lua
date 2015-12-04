@@ -50,7 +50,7 @@ function Gene:copy()
 end
 
 function Gene:toConnection()
-    local connection = Connection.new(self.__input, self.__output, self.__weight, true)
+    local connection = Connection.new(self.__input, self.__output, self.__weight)
     connection:setInnovation(self.__innovation)
     
     return connection
