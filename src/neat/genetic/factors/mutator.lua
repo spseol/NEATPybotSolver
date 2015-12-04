@@ -4,12 +4,12 @@ require "neat.genetic.factors.crossover"
 Mutator = {}
 
 function Mutator.mutateChromosome(chromosome)
-    if math.seededRandom() > NeatCore.MutationChances.chromosome then return end
+    if math.seededRandom() > NeatCore.MutationsChances.chromosome then return end
 end
 
 function Mutator.mutateGeneWeights(gene)
-    if math.seededRandom() > NeatCore.MutationChances.perturb then
-        local step = NeatCore.MutationChances.stepSize
+    if math.seededRandom() > NeatCore.MutationsChances.perturb then
+        local step = NeatCore.Mutations.stepSize
         gene:setWeight(gene:weight() + math.seededRandom() * 2 * step - step)
     else
         -- because sigmoid(2) = max(sigmoid) and sigmoid(-2) = min(sigmoid) 
