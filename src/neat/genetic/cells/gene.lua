@@ -9,7 +9,6 @@ GeneMeta = {
         local border = "|"
         local margin = " "
         local fill = "#"
-        if not self.__enabled and self.__innovation == 1 then print(666) end
         if not self.__enabled then margin = fill end
         
         local geneString = {
@@ -31,6 +30,7 @@ function Gene.new(networkConnection)
     property(Gene, "__output", "output", nil, o, networkConnection:output())
     property(Gene, "__innovation", "innovation", nil, o, networkConnection:innovation())
     property(Gene, "__weight", "weight", "setWeight", o, networkConnection:weight())
+    property(Gene, "__enabledMutation", "enabledMutation", nil, o, networkConnection:enabledMutation())
 
     setmetatable(o, GeneMeta)
     
@@ -49,6 +49,9 @@ function Gene:copy()
     return o
 end
 
--- function Gene:setWeight(v)
---     self.__weight = v
--- end
+function Gene:toConnection()
+    local connection = Connection.new(self.__input, self.__output, self.__weight, true)
+    connection:setInnovation(self.__innovation)
+    
+    return connection
+end
