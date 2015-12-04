@@ -24,14 +24,14 @@ NeatCore = {
         perturb = 0.9,
         randomWeight = 0.1,
         disableIfParentDisable = 0.75,
-        offspringCrossover = 0.75,
+        chromosomesCrossover = 0.75,
         newNode = 0.3, -- 0.03
         newLink = 0.6, -- 0.05
         disableGene = 0.4,
         enableGene = 0.2
     },
     
-    Mutation = {
+    Mutations = {
         interspeciesMatingRate = 0.001,
         stepSize = 0.1
     },
