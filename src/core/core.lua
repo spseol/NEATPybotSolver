@@ -1,3 +1,7 @@
+function sleep(secs)
+    os.execute("sleep " .. tonumber(secs))
+end
+
 table.keysCount = function(t)
     local count = 0
 
