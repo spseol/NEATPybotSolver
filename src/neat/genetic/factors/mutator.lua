@@ -55,6 +55,8 @@ function Mutator.mutateChromosoneGenesEnable(chromosome)
 end
 
 function Mutator.newNode(chromosome)
+    if math.seededRandom() > NeatCore.MutationsChances.newNode then return end
+
     local genes = chromosome:genes()
     local neuronsIndexes = {}
     local geneIndex = chromosome:innovations()[math.seededRandom(1, #chromosome:innovations())]
