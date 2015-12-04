@@ -83,7 +83,24 @@ function Mutator.newNode(chromosome)
     end
 end
 
-function Mutator.newLink()
+function Mutator.newLink(chromosome)
+    if math.seededRandom() > NeatCore.MutationsChances.newLink then return end
+
+    -- need network to determine if new link will cause recurrent network and to get random neurons
+    local tempNetwork = chromosome:toNetwork()
+    local inID
+    local outID
+    local newConnectionIsRecurrent
+    local newConnection
+    
+    repeat
+        inID = tempNetwork:randomNeuron(Neuron.output)
+        outID = tempNetwork:randomNeuron(Neuron.input | Neuron.bias)
+        newConnection = Connection.new(inID, outID, math.seededRandom() * 4 - 2)
+        newConnectionIsRecurrent = tempNetwork:checkRecurrentConnection(newConnection)
+    until not newConnectionIsRecurrent
+
+    chromosome:addGene(Gene.new(newConnection))
 end
 
 function Mutator.crossover()
