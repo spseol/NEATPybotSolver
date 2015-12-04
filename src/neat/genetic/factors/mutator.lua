@@ -12,8 +12,8 @@ function Mutator.mutateGeneWeights(gene)
         local step = NeatCore.Mutations.stepSize
         gene:setWeight(gene:weight() + math.seededRandom() * 2 * step - step)
     else
-        -- because sigmoid(2) = max(sigmoid) and sigmoid(-2) = min(sigmoid) 
-        gene:setWeight(math.seededRandom() * 4 - 2)
+        -- because sigmoid(2) = max(sigmoid) and sigmoid(-2) = min(sigmoid) => make it smaller
+        gene:setWeight(math.seededRandom() * 2 - 1)
     end
 end
 
