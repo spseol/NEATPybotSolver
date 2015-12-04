@@ -1,10 +1,20 @@
+require "core.core"
 require "neat.neatcore"
 require "neat.genetic.factors.crossover"
+require "neat.network.network"
 
 Mutator = {}
 
 function Mutator.mutateChromosome(chromosome)
     if math.seededRandom() > NeatCore.MutationsChances.chromosome then return end
+    
+    for _, gene in pairs(chromosome:genes()) do
+        Mutator.mutateGeneWeights(gene)
+    end
+    
+    Mutator.mutateChromosoneGenesEnable(chromosome)
+    Mutator.newNode(chromosome)
+    Mutator.newLink(chromosome)
 end
 
 function Mutator.mutateGeneWeights(gene)
