@@ -113,5 +113,13 @@ function Mutator.newLink(chromosome)
     chromosome:addGene(Gene.new(newConnection))
 end
 
-function Mutator.crossover()
+function Mutator.breedChild(chromosome1, chromosome2)
+    if math.seededRandom() <= NeatCore.MutationsChances.chromosomesCrossover then
+        local child = Crossover.crossover(chromosome1, chromosome2)
+        Mutator.mutateDisabledInheritedGenes(chromosome1, chromosome2, child)
+        return child
+    else
+        local parents = {chromosome1, chromosome2}
+        return parents[math.seededRandom(1,2)]:copyChromosome()
+    end
 end
