@@ -15,16 +15,17 @@ function Crossover.crossover(chromosome, otherChromosome)
     for key, _ in pairs(commonGenes[1]) do
         local usedGene = commonGenes[math.seededRandom(1, 2)][key]
         table.insert(childGenes, usedGene:copy())
-        -- childGenes[usedGene:innovation()] = usedGene:copy()
     end
 
     -- inherit excess and disjoint genes from more fit parent
     local moreFitParent, l = ChromosomeAnalyzer.moreFitChromosome(chromosome, otherChromosome)
     local disjointAndExcessGenes = table.join(ChromosomeAnalyzer.disjointAndExcessGenes(chromosome, otherChromosome))
 
+    -- inherit excess and disjoint genes only from more fitter parent
     for _, gene in pairs(disjointAndExcessGenes) do
-        table.insert(childGenes, gene:copy())
-        -- childGenes[gene:innovation()] = gene:copy()
+        if moreFitParent:hasGene(gene) then
+            table.insert(childGenes, moreFitParent:genes()[gene:innovation()])
+        end
     end
 
     childChromosome:setGenes(childGenes)
