@@ -6,6 +6,18 @@ table.keysCount = function(t)
     return count
 end
 
+function table.removeTable(t, removingValue)
+    local indexofRemovingValue
+    for k, v in pairs(t) do
+        indexofRemovingValue = k
+        if v == removingValue then
+            break
+        end 
+    end
+    
+    t[indexofRemovingValue] = nil
+end
+
 table.last = function(t)
     local last
 
