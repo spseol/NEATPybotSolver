@@ -16,15 +16,23 @@ table.last = function(t)
     return last
 end
 
-table.join = function(t)
-    local result = ""
-
+function table.find(t, value)
     for _, v in pairs(t) do
-        result = result .. v
+        if v == value then
+            return true
+        end
     end
-
-    return result
 end
+
+-- table.join = function(t)
+--     local result = ""
+
+--     for _, v in pairs(t) do
+--         result = result .. v
+--     end
+
+--     return result
+-- end
 
 table.copy = function(t)
     local copiedTable = {}
