@@ -48,7 +48,7 @@ function Mutator.mutateChromosoneGenesEnable(chromosome)
     for _, gene in pairs(chromosome:genes()) do
         if math.seededRandom() <= NeatCore.MutationsChances.disableGene then
             gene:setEnabled(false)
-        else
+        elseif math.seededRandom() <= NeatCore.MutationsChances.enableGene then
             gene:setEnabled(true)
         end
     end
