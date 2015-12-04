@@ -1,4 +1,5 @@
 require "core.classextensions"
+require "core.extendedmath"
 
 Neuron = {
     output = 1,
@@ -38,4 +39,60 @@ function Neuron.new(neuronType, id)
     setmetatable(o, NeuronMeta)
 
     return o
+end
+
+function Neuron:setValue(value)
+    if (self.__type & (Neuron.hidden | Neuron.output | Neuron.bias)) ~= 0 then
+        error("Value can be set only to input neuron.")
+    end
+    
+    self.__value = value
+end
+
+function Neuron:activate(value)
+    return math.sigmoid(value)
+end
+
+-- TODO add sigmoid
+function Neuron:value()
+    if self.__type == Neuron.bias then
+        return 1
+    elseif self.__type == Neuron.input then
+        return self.__value
+    elseif #self.__inputNeurons == 0 then
+        return nil
+    else
+        local sum = 0
+        local iNeuronValue
+        
+        for key, inputNeuron in pairs(self.__inputNeurons) do
+            iNeuronValue = inputNeuron:value()
+            
+            if iNeuronValue ~= nil then
+                sum = sum + iNeuronValue * self.__inputWeights[key] 
+            end
+        end
+        
+        return self:activate(sum)
+    end
+end
+
+function Neuron:addInput(inputNeuronID)
+    table.insert(self.__inputs, inputNeuronID)
+end
+
+function Neuron:addOutput(outputNeuronID)
+    table.insert(self.__outputs, outputNeuronID)
+end
+
+function Neuron:removeInput(inputNeuronID)
+    if table.find(self.__inputs, inputNeuronID) then
+        table.remove(self.__inputs, inputNeuronID)
+    end
+end
+
+function Neuron:removeOutput(outputNeuronID)
+    if table.find(self.__outputs, outputNeuronID) then
+        table.remove(self.__outputs, outputNeuronID)
+    end
 end
